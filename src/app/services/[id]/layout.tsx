@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Lnb from '@/components/lnb/Lnb'
+import Lnb from '@/components/lnb/lnb'
 
 export default function ServiceLayout({ children }: { children: ReactNode }) {
   return (
