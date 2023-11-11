@@ -6,6 +6,7 @@ import ScoreCard, {
   ScoreCardTitle,
 } from '@/components/score-card/score-card'
 import DashboardChart from '@/components/charts/dashboard-chart'
+import { Posts } from '@/components/posts/posts'
 
 const scoreCards: ScoreCardProps[] = [
   {
@@ -56,7 +57,9 @@ export default function ServicePage() {
       <div className="h-[400px] w-[100%]">
         <DashboardChart />
       </div>
-      <div></div>
+      <div>
+        <Posts />
+      </div>
     </div>
   )
 }
