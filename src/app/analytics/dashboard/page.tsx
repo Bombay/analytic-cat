@@ -1,12 +1,12 @@
-import ScoreCard, {
+import SimpleScoreCard, {
   ScoreCardDiff,
   ScoreCardFooter,
   ScoreCardLabel,
   ScoreCardProps,
   ScoreCardTitle,
-} from '@/components/score-card/score-card'
+} from '@/components/score-cards/simple-score-card'
 import DashboardChart from '@/components/charts/dashboard-chart'
-import { Posts } from '@/components/posts/posts'
+import PostsRsc from '@/components/posts/posts-rsc'
 
 const scoreCards: ScoreCardProps[] = [
   {
@@ -45,20 +45,20 @@ export default function ServicePage() {
     <div className="ml-auto mr-auto w-[90%]">
       <div className="mb-5 grid grid-cols-3 2xl:grid-cols-6">
         {scoreCards.map(scoreCard => (
-          <ScoreCard key={scoreCard.label}>
+          <SimpleScoreCard key={scoreCard.label}>
             <ScoreCardTitle>{scoreCard.value}</ScoreCardTitle>
             <ScoreCardFooter>
               <ScoreCardLabel>{scoreCard.label}</ScoreCardLabel>
               {scoreCard.diff && <ScoreCardDiff>{scoreCard.diff}</ScoreCardDiff>}
             </ScoreCardFooter>
-          </ScoreCard>
+          </SimpleScoreCard>
         ))}
       </div>
       <div className="h-[400px] w-[100%]">
         <DashboardChart />
       </div>
       <div>
-        <Posts />
+        <PostsRsc />
       </div>
     </div>
   )

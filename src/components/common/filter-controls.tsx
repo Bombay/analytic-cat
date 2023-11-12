@@ -9,8 +9,8 @@ export default function FilterControls() {
         'border-b-1 mb-4 flex h-[40px] items-center gap-2 border-b border-zinc-200 pb-2 pt-2',
       )}
     >
-      <FilterAddButton />
       <FilterBadge>browser: Chrome</FilterBadge>
+      <FilterAddButton />
     </section>
   )
 }

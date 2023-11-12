@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import Lnb from '@/components/lnb/lnb'
-import FilterControls from '@/components/filters/filter-controls'
+import Lnb from '@/components/common/lnb'
+import FilterControls from '@/components/common/filter-controls'
 
 export default function ServiceLayout({ children }: { children: ReactNode }) {
   return (
