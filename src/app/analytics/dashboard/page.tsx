@@ -6,7 +6,8 @@ import SimpleScoreCard, {
   ScoreCardTitle,
 } from '@/components/score-cards/simple-score-card'
 import DashboardChart from '@/components/charts/dashboard-chart'
-import PostsRsc from '@/components/posts/posts-rsc'
+import { Suspense } from 'react'
+import PostsContainer from '@/components/posts/posts-container'
 
 const scoreCards: ScoreCardProps[] = [
   {
@@ -58,7 +59,9 @@ export default function ServicePage() {
         <DashboardChart />
       </div>
       <div>
-        <PostsRsc />
+        <Suspense>
+          <PostsContainer />
+        </Suspense>
       </div>
     </div>
   )
