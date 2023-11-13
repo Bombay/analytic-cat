@@ -5,9 +5,9 @@ import SimpleScoreCard, {
   ScoreCardProps,
   ScoreCardTitle,
 } from '@/components/score-cards/simple-score-card'
-import DashboardChart from '@/components/charts/dashboard-chart'
+import DashboardChart from '@/app/analytics/dashboard/_components/dashboard-chart'
 import { Suspense } from 'react'
-import PostsContainer from '@/components/posts/posts-container'
+import PostsContainer from '@/app/analytics/dashboard/_components/posts/posts-container'
 
 const scoreCards: ScoreCardProps[] = [
   {
