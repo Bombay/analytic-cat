@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = "postgresql://admin:1234@localhost:5432/ancat?schema=public"
+  relationMode = "prisma"
+}
+
+model User {
+  email     String    @id @unique @map("email") @db.VarChar(255)
+  username  String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(60)
+  role      String    @map("role") @db.VarChar(50)
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  service Service[]
+
+  @@map("user")
+}
+
+model Service {
+  id        String    @id @unique @map("service_id") @db.Uuid
+  name      String    @db.VarChar(100)
+  domain    String?   @db.VarChar(500)
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  userEmail String? @map("user_email") @db.VarChar(255)
+  user      User?   @relation(fields: [userEmail], references: [email])
+
+  @@index([userEmail])
+  @@index([createdAt])
+  @@map("service")
+}
