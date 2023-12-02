@@ -51,6 +51,7 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@rollup/plugin-buble": "^1.0.3",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",

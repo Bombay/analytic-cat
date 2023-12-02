@@ -9,7 +9,8 @@ datasource db {
 }
 
 model User {
-  email     String    @id @unique @map("email") @db.VarChar(255)
+  id        String    @id @default(dbgenerated()) @db.Uuid
+  email     String    @unique @map("email") @db.VarChar(255)
   username  String    @unique @db.VarChar(255)
   password  String    @db.VarChar(60)
   role      String    @map("role") @db.VarChar(50)
@@ -30,10 +31,11 @@ model Service {
   updatedAt DateTime? @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
 
-  userEmail String? @map("user_email") @db.VarChar(255)
-  user      User?   @relation(fields: [userEmail], references: [email])
 
-  @@index([userEmail])
+  userId String? @map("user_id") @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
   @@index([createdAt])
   @@map("service")
 }

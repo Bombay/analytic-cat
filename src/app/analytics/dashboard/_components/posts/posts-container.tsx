@@ -1,13 +1,14 @@
 'use client'
 
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getPosts } from '@/api/posts'
 import { PostBody, PostSubtitle, PostTemplate, PostTitle } from '@/components/posts/post'
 
 export default function PostsContainer() {
-  const { data: posts } = useSuspenseQuery({
+  const { data: posts } = useQuery({
     queryKey: ['posts'],
     queryFn: getPosts,
+    refetchOnMount: false,
   })
 
   if (!posts) {
