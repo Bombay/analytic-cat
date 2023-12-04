@@ -6,3 +6,11 @@ export interface ServiceStatsValue {
   sessionsPerUser: number
   avgSessionDuration: number
 }
+
+export interface ServiceMetricValue extends ServiceStatsValue {
+  name: string
+}
+
+export type ServiceStats = {
+  [K in keyof ServiceStatsValue]: { value: ServiceStatsValue[K]; change: number }
+}

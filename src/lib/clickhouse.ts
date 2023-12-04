@@ -83,7 +83,7 @@ function getFilterQuery(filters: QueryFilters): string {
     const column: string | undefined = FILTER_COLUMNS[key as keyof typeof FILTER_COLUMNS]
 
     if (filterValue?.value && filterValue?.filter && column) {
-      const value =
+      let value =
         typeof filterValue.value === 'string'
           ? `'${filterValue.value.replace(/'/g, "''")}'`
           : filterValue.value
@@ -102,9 +102,11 @@ function getFilterQuery(filters: QueryFilters): string {
           queryParts.push(`${column} IS NULL`)
           break
         case Operators.contains:
+          value = value.replace(/^'|'$/g, '')
           queryParts.push(`${column} LIKE '%${value}%'`)
           break
         case Operators.doesNotContain:
+          value = value.replace(/^'|'$/g, '')
           queryParts.push(`${column} NOT LIKE '%${value}%'`)
           break
         case Operators.true:

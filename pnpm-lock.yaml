@@ -2164,7 +2164,6 @@ packages:
       tsv: 0.2.0
       uuid: 3.4.0
     dev: false
-    bundledDependencies: []
 
   /client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}

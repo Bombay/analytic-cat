@@ -40,6 +40,11 @@ export interface QueryFilters {
   lang?: QueryFilterValue<string>
 }
 
+export interface QueryFiltersRequest extends Omit<QueryFilters, 'startDate' | 'endDate'> {
+  startDate: QueryFilterValue<string>
+  endDate: QueryFilterValue<string>
+}
+
 export const FILTER_COLUMNS = {
   url: 'url_path',
   referrer: 'referrer_domain',

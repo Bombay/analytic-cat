@@ -1,3 +1,5 @@
+'use client'
+
 import SimpleScoreCard, {
   ScoreCardDiff,
   ScoreCardFooter,
@@ -6,7 +8,9 @@ import SimpleScoreCard, {
   ScoreCardTitle,
 } from '@/components/score-cards/simple-score-card'
 import DashboardChart from '@/app/analytics/dashboard/_components/dashboard-chart'
-import PostsRsc from '@/app/analytics/dashboard/_components/posts/posts-rsc'
+import axios from '@/lib/axios'
+import { Button } from '@/components/ui/button'
+import { Operators } from '@/domains/filter/filter.types'
 
 const scoreCards: ScoreCardProps[] = [
   {
@@ -40,9 +44,39 @@ const scoreCards: ScoreCardProps[] = [
   },
 ]
 
+const queryFilters = {
+  startDate: { filter: Operators.after, value: new Date('2021-01-01') },
+  endDate: { filter: Operators.before, value: new Date('2021-01-31') },
+  /*timezone: { value: 'Asia/Seoul' },
+  unit: { value: 'day' },
+  eventType: { filter: Operators.equals, value: 1 },
+  url: { filter: Operators.contains, value: 'example.com' },
+  referrer: { filter: Operators.doesNotContain, value: 'anotherdomain.com' },
+  title: { filter: Operators.equals, value: 'Homepage' },
+  os: { filter: Operators.equals, value: 'Windows' },
+  browser: { filter: Operators.equals, value: 'Chrome' },
+  device: { filter: Operators.equals, value: 'Mobile' },
+  country: { filter: Operators.equals, value: 'KR' },
+  region: { filter: Operators.equals, value: 'Seoul' },
+  city: { filter: Operators.equals, value: 'Gangnam' },
+  language: { filter: Operators.equals, value: 'ko' },
+  event: { filter: Operators.equals, value: 'click' },
+  team: { filter: Operators.equals, value: 'Development' },
+  corp: { filter: Operators.equals, value: 'ExampleCorp' },
+  lang: { filter: Operators.equals, value: 'Korean' },*/
+}
+
 export default function ServicePage() {
+  const onClick = async () => {
+    const data = await axios.post('/api/service/e25a0666-6dbd-41ea-9204-46a044852f64/stats', {
+      ...queryFilters,
+    })
+    console.log('??', data)
+  }
+
   return (
     <div className="ml-auto mr-auto w-[90%]">
+      <Button onClick={onClick}>데이터 가져오기</Button>
       <div className="mb-5 grid grid-cols-3 2xl:grid-cols-6">
         {scoreCards.map(scoreCard => (
           <SimpleScoreCard key={scoreCard.label}>
@@ -56,9 +90,6 @@ export default function ServicePage() {
       </div>
       <div className="h-[400px] w-[100%]">
         <DashboardChart />
-      </div>
-      <div>
-        <PostsRsc />
       </div>
     </div>
   )

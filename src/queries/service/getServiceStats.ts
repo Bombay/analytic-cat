@@ -30,9 +30,9 @@ export async function getServiceStats(serviceId: string, filters: QueryFilters) 
         select pageviews,
                sessions,
                users,
-               pageviews / sessions as pageviewsPerSession,
-               sessions / users     as sessionsPerUser,
-               totaltime / sessions as avgSessionTime
+               if(sessions = 0, 0, pageviews / sessions) as pageviewsPerSession,
+               if(users = 0, 0, sessions / users)     as sessionsPerUser,
+               if(sessions = 0, 0, totaltime / sessions) as avgSessionTime
         from stats;`,
     params,
   )
