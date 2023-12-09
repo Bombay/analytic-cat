@@ -1,18 +1,33 @@
 import { NextResponse } from 'next/server'
 import { getServiceMetric } from '@/queries/service/getServiceMetric'
+import { QueryFilters, QueryFiltersRequest } from '@/domains/filter/filter.types'
+import { parseDateRangeQuery } from '@/lib/date'
+
+export async function getMetrics(
+  serviceId: string,
+  requestFilters: QueryFiltersRequest,
+  column: string,
+) {
+  const { startDate, endDate } = await parseDateRangeQuery(
+    serviceId,
+    requestFilters.startDate,
+    requestFilters.endDate,
+  )
+  const filters: QueryFilters = {
+    ...requestFilters,
+    startDate,
+    endDate,
+  }
+
+  return getServiceMetric(serviceId, column, filters)
+}
 
 export async function POST(
   request: Request,
   { params }: { params: { id: string; column: string } },
 ) {
-  let filters = await request.json()
-
+  const requestFilters: QueryFiltersRequest = await request.json()
   const { id: serviceId, column } = params
-  filters = {
-    ...filters,
-    startDate: { value: new Date('2019-06-01T00:00:00.000Z') },
-    endDate: { value: new Date('2020-06-30T23:59:59.999Z') },
-  }
-  const data = await getServiceMetric(serviceId, column, filters)
+  const data = await getMetrics(serviceId, requestFilters, column)
   return NextResponse.json(data)
 }

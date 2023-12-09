@@ -5,17 +5,17 @@ import { parseDateRangeQuery } from '@/lib/date'
 import { differenceInMinutes, subMinutes } from 'date-fns'
 import { ServiceStats, ServiceStatsValue } from '@/domains/service/service.types'
 
-export async function getMetricsWithDiff(serviceId: string, requestFilters: QueryFiltersRequest) {
+export async function getStatsWithDiff(serviceId: string, requestFilters: QueryFiltersRequest) {
   const { startDate, endDate } = await parseDateRangeQuery(
     serviceId,
-    requestFilters.startDate?.value,
-    requestFilters.endDate?.value,
+    requestFilters.startDate,
+    requestFilters.endDate,
   )
 
   const filters: QueryFilters = {
     ...requestFilters,
-    startDate: { value: startDate },
-    endDate: { value: endDate },
+    startDate,
+    endDate,
   }
 
   const diff = differenceInMinutes(endDate, startDate)
@@ -26,8 +26,8 @@ export async function getMetricsWithDiff(serviceId: string, requestFilters: Quer
     getServiceStats(serviceId, filters),
     getServiceStats(serviceId, {
       ...filters,
-      startDate: { value: prevStartDate },
-      endDate: { value: prevEndDate },
+      startDate: prevStartDate,
+      endDate: prevEndDate,
     }),
   ])
 
@@ -45,6 +45,6 @@ export async function POST(request: Request, { params }: { params: { id: string 
   const requestFilters: QueryFiltersRequest = await request.json()
   const { id: serviceId } = params
 
-  const data = await getMetricsWithDiff(serviceId, requestFilters)
+  const data = await getStatsWithDiff(serviceId, requestFilters)
   return NextResponse.json(data)
 }

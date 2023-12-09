@@ -1,3 +1,5 @@
+import { EVENT_TYPE } from '@/lib/constants'
+
 export enum Operators {
   equals = 'eq', // 값이 동일
   notEquals = 'neq', // 값이 동일하지 않음
@@ -18,11 +20,11 @@ export enum Operators {
 export type QueryFilterValue<T> = { filter?: Operators; value: T }
 
 export interface QueryFilters {
-  startDate?: QueryFilterValue<Date>
-  endDate?: QueryFilterValue<Date>
-  timezone?: QueryFilterValue<string>
-  unit?: QueryFilterValue<string>
-  eventType?: QueryFilterValue<number>
+  startDate?: Date
+  endDate?: Date
+  timezone?: string
+  unit?: string
+  eventType?: (typeof EVENT_TYPE)[keyof typeof EVENT_TYPE]
   url?: QueryFilterValue<string>
   referrer?: QueryFilterValue<string>
   title?: QueryFilterValue<string>
@@ -41,8 +43,8 @@ export interface QueryFilters {
 }
 
 export interface QueryFiltersRequest extends Omit<QueryFilters, 'startDate' | 'endDate'> {
-  startDate: QueryFilterValue<string>
-  endDate: QueryFilterValue<string>
+  startDate: string
+  endDate: string
 }
 
 export const FILTER_COLUMNS = {

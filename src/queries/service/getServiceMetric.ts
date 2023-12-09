@@ -6,7 +6,7 @@ import { ServiceMetricValue } from '@/domains/service/service.types'
 export async function getServiceMetric(serviceId: string, column: string, filters: QueryFilters) {
   const { filterQuery, params } = await parseFilters(serviceId, {
     ...filters,
-    eventType: { value: EVENT_TYPE.pageView },
+    eventType: EVENT_TYPE.pageView,
   })
 
   let optionalCountrySelect = ''

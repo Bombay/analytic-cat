@@ -1,5 +1,10 @@
 import { ClickHouse } from 'clickhouse'
-import { FILTER_COLUMNS, Operators, QueryFilters } from '@/domains/filter/filter.types'
+import {
+  FILTER_COLUMNS,
+  Operators,
+  QueryFilters,
+  QueryFilterValue,
+} from '@/domains/filter/filter.types'
 import getService from '@/queries/service/getService'
 
 let clickhouse: ClickHouse
@@ -79,16 +84,15 @@ export async function parseFilters(serviceId: string, filters: QueryFilters) {
 function getFilterQuery(filters: QueryFilters): string {
   const queryParts = []
 
-  for (const [key, filterValue] of Object.entries(filters)) {
+  for (const [key, filter] of Object.entries(filters)) {
     const column: string | undefined = FILTER_COLUMNS[key as keyof typeof FILTER_COLUMNS]
+    if (filter && column) {
+      const operator = isQueryFilterValue(filter) ? filter.filter : Operators.equals
 
-    if (filterValue?.value && filterValue?.filter && column) {
       let value =
-        typeof filterValue.value === 'string'
-          ? `'${filterValue.value.replace(/'/g, "''")}'`
-          : filterValue.value
+        typeof filter.value === 'string' ? `'${filter.value.replace(/'/g, "''")}'` : filter.value
 
-      switch (filterValue.filter) {
+      switch (operator) {
         case Operators.equals:
           queryParts.push(`${column} = ${value}`)
           break
@@ -134,7 +138,7 @@ function getFilterQuery(filters: QueryFilters): string {
           queryParts.push(`${column} > ${value}`)
           break
         default:
-          throw new Error(`Unsupported operator: ${filterValue.filter}`)
+          throw new Error(`Unsupported operator: ${filter.filter}`)
       }
     }
   }
@@ -142,13 +146,21 @@ function getFilterQuery(filters: QueryFilters): string {
   return queryParts.length > 0 ? ' AND ' + queryParts.join(' AND ') : ''
 }
 
+function isQueryFilterValue(filter: any): filter is QueryFilterValue<any> {
+  return filter && typeof filter === 'object' && 'value' in filter
+}
+
 function normalizeFilters(filters: QueryFilters) {
   const record: Record<string, string | Date | number> = {}
 
   Object.keys(filters).forEach(key => {
     const filter = filters[key as keyof QueryFilters]
-    if (filter && filter.value !== undefined) {
-      record[key] = filter.value
+    if (filter !== undefined) {
+      if (isQueryFilterValue(filter)) {
+        record[key] = filter.value
+      } else {
+        record[key] = filter
+      }
     }
   })
 

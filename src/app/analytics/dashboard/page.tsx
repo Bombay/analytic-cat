@@ -10,7 +10,6 @@ import SimpleScoreCard, {
 import DashboardChart from '@/app/analytics/dashboard/_components/dashboard-chart'
 import axios from '@/lib/axios'
 import { Button } from '@/components/ui/button'
-import { Operators } from '@/domains/filter/filter.types'
 
 const scoreCards: ScoreCardProps[] = [
   {
@@ -45,8 +44,8 @@ const scoreCards: ScoreCardProps[] = [
 ]
 
 const queryFilters = {
-  startDate: { filter: Operators.after, value: new Date('2021-01-01') },
-  endDate: { filter: Operators.before, value: new Date('2021-01-31') },
+  startDate: new Date('2021-01-01'),
+  endDate: new Date('2021-01-31'),
   /*timezone: { value: 'Asia/Seoul' },
   unit: { value: 'day' },
   eventType: { filter: Operators.equals, value: 1 },
