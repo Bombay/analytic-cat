@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getServiceStats } from '@/queries/service/getServiceStats'
 import { QueryFilters, QueryFiltersRequest } from '@/domains/filter/filter.types'
 import { parseDateRangeQuery } from '@/lib/date'
@@ -41,7 +41,7 @@ export async function getStatsWithDiff(serviceId: string, requestFilters: QueryF
   }, {} as ServiceStats)
 }
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   const requestFilters: QueryFiltersRequest = await request.json()
   const { id: serviceId } = params
 

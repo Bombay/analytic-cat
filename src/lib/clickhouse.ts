@@ -40,7 +40,7 @@ async function connect() {
   return clickhouse
 }
 
-type QueryParams = { [key: string]: string | number | boolean | null }
+type QueryParams = { [key: string]: string | number | boolean | null | undefined }
 
 async function rawQuery<T>(query: string, params: QueryParams = {}): Promise<T> {
   await connect()

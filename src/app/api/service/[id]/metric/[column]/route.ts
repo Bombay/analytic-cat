@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getServiceMetric } from '@/queries/service/getServiceMetric'
 import { QueryFilters, QueryFiltersRequest } from '@/domains/filter/filter.types'
 import { parseDateRangeQuery } from '@/lib/date'
@@ -23,7 +23,7 @@ export async function getMetrics(
 }
 
 export async function POST(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string; column: string } },
 ) {
   const requestFilters: QueryFiltersRequest = await request.json()
