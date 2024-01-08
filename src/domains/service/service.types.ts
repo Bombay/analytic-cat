@@ -18,3 +18,10 @@ export interface ServiceTrendValue extends ServiceStatsValue {
 export type ServiceStats = {
   [K in keyof ServiceStatsValue]: { value: ServiceStatsValue[K]; change: number }
 }
+
+export interface Service {
+  id: string
+  name: string
+  domain: string
+  createdAt: Date
+}

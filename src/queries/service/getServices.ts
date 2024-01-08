@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
 
 export default function getServices() {
-  return prisma.user.findMany()
+  return prisma.service.findMany()
 }

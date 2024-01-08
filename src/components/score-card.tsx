@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
-export default function SimpleScoreCard({
+export default function ScoreCard({
   className,
   children,
 }: {

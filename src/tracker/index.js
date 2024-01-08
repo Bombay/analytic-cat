@@ -193,10 +193,10 @@ import { v4 } from 'uuid'
 
   const getSessionId = () => {
     const currentTimestamp = new Date().getTime()
-    const sessionIdKey = 'ancat-session-id'
-    const sessionExpiryKey = 'ancat-session-expiry'
-    const existingSessionId = localStorage.getItem(sessionIdKey)
-    const existingSessionExpiry = localStorage.getItem(sessionExpiryKey)
+    const SESSION_ID_KEY = 'ancat-session-id'
+    const SESSION_EXPIRY_KEY = 'ancat-session-expiry'
+    const existingSessionId = localStorage.getItem(SESSION_ID_KEY)
+    const existingSessionExpiry = localStorage.getItem(SESSION_EXPIRY_KEY)
 
     // Check if a session id already exists and hasn't expired
     if (
@@ -206,15 +206,15 @@ import { v4 } from 'uuid'
     ) {
       // Update the session expiry time to 30 minutes from now
       const newExpiryTime = currentTimestamp + 30 * 60 * 1000 // 30 minutes in milliseconds
-      localStorage.setItem(sessionExpiryKey, newExpiryTime.toString())
+      localStorage.setItem(SESSION_EXPIRY_KEY, newExpiryTime.toString())
       return existingSessionId
     }
 
     // If no session id or it has expired, create a new one
     const newSessionId = v4()
     const newExpiryTime = currentTimestamp + 30 * 60 * 1000 // 30 minutes in milliseconds
-    localStorage.setItem(sessionIdKey, newSessionId)
-    localStorage.setItem(sessionExpiryKey, newExpiryTime.toString())
+    localStorage.setItem(SESSION_ID_KEY, newSessionId)
+    localStorage.setItem(SESSION_EXPIRY_KEY, newExpiryTime.toString())
 
     return newSessionId
   }
@@ -245,7 +245,10 @@ import { v4 } from 'uuid'
         data: typeof data === 'object' ? data : undefined,
       })
     } else if (typeof obj === 'object') {
-      return send(obj)
+      return send({
+        ...getPayload(),
+        ...obj,
+      })
     } else if (typeof obj === 'function') {
       return send(obj(getPayload()))
     }
