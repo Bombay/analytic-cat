@@ -1,7 +1,5 @@
-import axios from '@/lib/axios'
-import { Service } from '@/domains/service/service.types'
+import catFetch from '@/lib/cat-fetch'
 
 export async function getServices() {
-  const { data } = await axios.get<Service[]>('/api/services')
-  return data
+  return catFetch('/api/services').then(res => res.json())
 }
