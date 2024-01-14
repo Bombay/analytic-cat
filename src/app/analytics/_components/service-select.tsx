@@ -1,6 +1,6 @@
 'use client'
 
-import { useServicesQuery } from '@/domains/service/service'
+import { useCurrentService, useServicesQuery } from '@/domains/service/service'
 import { cn } from '@/lib/utils'
 import {
   Select,
@@ -10,16 +10,19 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-export default function LnbServiceSelect({ className }: { className?: string }) {
+export default function ServiceSelect({ className }: { className?: string }) {
   const { data: services } = useServicesQuery()
+  const currentService = useCurrentService()
 
   if (!services) {
     return null
   }
 
+  const defaultServiceId = currentService?.id || services[0].id
+
   return (
     <div className={cn('item-center flex', className)}>
-      <Select defaultValue={services[0].id}>
+      <Select defaultValue={defaultServiceId}>
         <SelectTrigger className="border-0 text-xl font-extrabold focus:border-0 focus:border-none focus:shadow-none focus:ring-0">
           <div className="ml-2 mr-2">
             <SelectValue />

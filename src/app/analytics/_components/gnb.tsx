@@ -1,13 +1,13 @@
 import { cn } from '@/lib/utils'
 import Cat from '@/components/icons/cat'
-import LnbServiceSelect from '@/app/analytics/_components/lnb-service-select'
+import ServiceSelect from '@/app/analytics/_components/service-select'
 
 export default function Gnb({ className }: { className?: string }) {
   return (
     <section className={className}>
       <Logo className="mb-3 mt-3 border-r border-l-zinc-400 pr-7" />
       <section className="flex">
-        <LnbServiceSelect />
+        <ServiceSelect />
       </section>
     </section>
   )

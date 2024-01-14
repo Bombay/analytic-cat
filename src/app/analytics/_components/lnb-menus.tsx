@@ -1,14 +1,14 @@
 'use client'
 
 import { Menu, MenuIcon, MenuItem } from '@/components/menu'
-import { RiDashboardFill, RiDeviceLine, RiProfileFill, RiUser3Fill } from 'react-icons/ri'
 import { useRouter } from 'next/navigation'
+import { LnbMenuData } from '@/domains/menu/menu'
 
 export function LnbMenus({ className, menus }: LnbMenusProps) {
   const router = useRouter()
-  const onClickMenuItem = (href: string | undefined) => {
-    if (href) {
-      router.push(href)
+  const onClickMenuItem = (id: string | undefined) => {
+    if (id) {
+      router.push(id)
     }
   }
 
@@ -16,8 +16,8 @@ export function LnbMenus({ className, menus }: LnbMenusProps) {
     <nav className={className}>
       <Menu>
         {menus.map(menu => (
-          <MenuItem key={menu.id} onClick={() => onClickMenuItem(menu.href)}>
-            {menu.icon && <MenuIcon icon={menu.icon} />}
+          <MenuItem key={menu.id} onClick={() => onClickMenuItem(menu.id)} selected={menu.selected}>
+            {menu.id && <MenuIcon menuId={menu.id} />}
             {menu.name}
           </MenuItem>
         ))}
@@ -28,17 +28,5 @@ export function LnbMenus({ className, menus }: LnbMenusProps) {
 
 interface LnbMenusProps {
   className?: string
-  menus: {
-    id: string | number
-    name: string
-    icon?: string
-    href?: string
-  }[]
-}
-
-const menuIcons = {
-  dashboard: <RiDashboardFill />,
-  profile: <RiProfileFill />,
-  environment: <RiDeviceLine />,
-  user: <RiUser3Fill />,
+  menus: LnbMenuData[]
 }

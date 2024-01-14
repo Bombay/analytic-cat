@@ -1,11 +1,13 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { useMenus } from '@/domains/menu/menu'
+import { LnbMenus } from '@/app/analytics/_components/lnb-menus'
 
 export default function Lnb({ className }: { className?: string }) {
-  return (
-    <aside className={cn(className, 'flex flex-col shadow-xl')}>
-      {/*<LnbMenus className="mt-7" menus={} />*/}
-    </aside>
-  )
+  const menus = useMenus()
+  if (!menus) {
+    return null
+  }
+
+  return <LnbMenus menus={menus} />
 }

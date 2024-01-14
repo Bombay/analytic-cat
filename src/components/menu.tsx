@@ -3,7 +3,8 @@
 import { cn } from '@/lib/utils'
 import { Slot } from '@radix-ui/react-slot'
 import { ReactNode } from 'react'
-import { RiDashboardFill } from 'react-icons/ri'
+import { RiDashboardFill, RiDeviceLine, RiProfileFill, RiUser3Fill } from 'react-icons/ri'
+import { FaCat } from 'react-icons/fa6'
 
 function Menu({ className, children }: { className?: string; children: ReactNode }) {
   return <ul className={cn(className, 'flex', 'flex-col', 'gap-2', 'text-zinc-500')}>{children}</ul>
@@ -36,17 +37,20 @@ function MenuItem({
   )
 }
 
-const icons = (icon: string) => {
-  switch (icon) {
-    case 'dashboard':
-      return <RiDashboardFill />
-    default:
-      return <RiDashboardFill />
+const icons = (menuId: string) => {
+  const DEFAULT_ICON = <FaCat />
+  const icons: Record<string, ReactNode> = {
+    dashboard: <RiDashboardFill />,
+    profile: <RiProfileFill />,
+    environment: <RiDeviceLine />,
+    userActivity: <RiUser3Fill />,
   }
+
+  return icons[menuId] || DEFAULT_ICON
 }
 
-function MenuIcon({ className, icon }: { className?: string; icon: string }) {
-  return <Slot className={cn(className, 'mr-2 h-4 w-4')}>{icons(icon)}</Slot>
+function MenuIcon({ className, menuId }: { className?: string; menuId: string }) {
+  return <Slot className={cn(className, 'mr-2 h-4 w-4')}>{icons(menuId)}</Slot>
 }
 
 export { Menu, MenuItem, MenuIcon }
