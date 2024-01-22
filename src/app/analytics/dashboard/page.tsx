@@ -1,12 +1,8 @@
 'use client'
 
-import ScoreCard, {
-  ScoreCardDiff,
-  ScoreCardFooter,
-  ScoreCardLabel,
-  ScoreCardProps,
-  ScoreCardTitle,
-} from '@/components/score-card'
+import { ScoreCardProps } from '@/components/score-card'
+import Report from '@/components/report/report'
+import ScoreCard from '@/components/charts/score-card'
 
 const scoreCards: ScoreCardProps[] = [
   {
@@ -42,18 +38,10 @@ const scoreCards: ScoreCardProps[] = [
 
 export default function ServicePage() {
   return (
-    <div>
-      <div className="mb-5 grid grid-cols-3 xl:grid-cols-6">
-        {scoreCards.map(scoreCard => (
-          <ScoreCard key={scoreCard.label}>
-            <ScoreCardTitle>{scoreCard.value}</ScoreCardTitle>
-            <ScoreCardFooter>
-              <ScoreCardLabel>{scoreCard.label}</ScoreCardLabel>
-              {scoreCard.diff && <ScoreCardDiff>{scoreCard.diff}</ScoreCardDiff>}
-            </ScoreCardFooter>
-          </ScoreCard>
-        ))}
-      </div>
-    </div>
+    <section>
+      <Report>
+        <ScoreCard />
+      </Report>
+    </section>
   )
 }
